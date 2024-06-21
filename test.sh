@@ -26,11 +26,11 @@ if [ $? -ne 0 ]; then
 fi
 
 # Set the wallpaper
-termux-wallpaper-set "$WALLPAPER_PATH"
-if [ $? -ne 0 ]; then
-  echo "Failed to set wallpaper."
-  exit 1
-fi
+# termux-wallpaper-set "$WALLPAPER_PATH"
+# if [ $? -ne 0 ]; then
+#   echo "Failed to set wallpaper."
+#   exit 1
+# fi
 
 # Set the ringtone
 RINGTONE_URI=$(content insert --uri content://media/external/audio/media --bind data:text/plain:$RINGTONE_PATH --bind title:text/plain:"Custom Ringtone" --bind mime_type:text/plain:"audio/mp3" --bind is_ringtone:int:1)
