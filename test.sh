@@ -26,7 +26,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Set the wallpaper
-am start -a android.intent.action.SET_WALLPAPER -d file://$WALLPAPER_PATH
+termux-wallpaper-set "$WALLPAPER_PATH"
 if [ $? -ne 0 ]; then
   echo "Failed to set wallpaper."
   exit 1
