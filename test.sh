@@ -25,19 +25,34 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Set the wallpaper
-# termux-wallpaper-set "$WALLPAPER_PATH"
-# if [ $? -ne 0 ]; then
-#   echo "Failed to set wallpaper."
-#   exit 1
-# fi
+# Set the wallpaper using termux-wallpaper command
+termux-wallpaper -f "$WALLPAPER_PATH"
+if [ $? -ne 0 ]; then
+  echo "Failed to set wallpaper."
+  exit 1
+fi
+
+# Insert the ringtone into the media store
+RINGTONE_URI=$(termux-media-scan "$RINGTONE_PATH")
+if [ $? -ne 0 ]; then
+  echo "Failed to scan media."
+  exit 1
+fi
+
+# Ensure the ringtone URI is set properly
+RINGTONE_URI=$(content query --uri content://media/external/audio/media --projection _id --where "data='$RINGTONE_PATH'" | grep _id | awk -F= '{print $2}')
+if [ -z "$RINGTONE_URI" ]; then
+  echo "Failed to get ringtone URI."
+  exit 1
+fi
+
+RINGTONE_URI="content://media/external/audio/media/$RINGTONE_URI"
 
 # Set the ringtone
-RINGTONE_URI=$(content insert --uri content://media/external/audio/media --bind data:text/plain:$RINGTONE_PATH --bind title:text/plain:"Custom Ringtone" --bind mime_type:text/plain:"audio/mp3" --bind is_ringtone:int:1)
+settings put system ringtone $RINGTONE_URI
 if [ $? -ne 0 ]; then
   echo "Failed to set ringtone."
   exit 1
 fi
-settings put system ringtone $RINGTONE_URI
 
 echo "Wallpaper and ringtone changed successfully."
