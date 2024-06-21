@@ -9,11 +9,11 @@
 # RINGTONE_PATH="/sdcard/Download/ringtone.mp3"
 
 # Download the wallpaper
-curl -o "/sdcard/Download/wallpaper.jpg https://file-examples.com/storage/fed5266c9966708dcaeaea6/2017/10/file_example_JPG_100kB.jpg
-if [ $? -ne 0 ]; then
-  echo "Failed to download wallpaper."
-  exit 1
-fi
+# curl -o "/sdcard/Download/wallpaper.jpg https://file-examples.com/storage/fed5266c9966708dcaeaea6/2017/10/file_example_JPG_100kB.jpg
+# if [ $? -ne 0 ]; then
+#   echo "Failed to download wallpaper."
+#   exit 1
+# fi
 
 # Download the ringtone
 # curl -o "$RINGTONE_PATH" "$RINGTONE_URL"
@@ -23,7 +23,7 @@ fi
 # fi
 
 # Set the wallpaper
-am start -a android.intent.action.SET_WALLPAPER -d file://$WALLPAPER_PATH
+am start -a android.intent.action.SET_WALLPAPER -d file:///sdcard/Download/wallpaper.jpg
 if [ $? -ne 0 ]; then
   echo "Failed to set wallpaper."
   exit 1
